@@ -51,5 +51,11 @@ dependencies {
     implementation group: 'org.jetbrains.kotlinx', name: 'kotlinx-coroutines-core', version: '1.1.1'
 }
 
+// Javadoc doesn't seem to work with Kotlin code ATM
+// c.f. https://github.com/novoda/bintray-release/issues/71
+tasks.withType(Javadoc).all {
+    enabled = false
+}
+
 apply from: 'install.gradle'
 apply from: 'bintray.gradle'
