@@ -11,6 +11,10 @@ implementation 'be.rottenrei:android-coroutine-scopes:LATESTVERSION'
 
 [ ![JCenter](https://api.bintray.com/packages/karottenreibe/android-coroutine-scopes/android-coroutine-scopes/images/download.svg) ](https://bintray.com/karottenreibe/android-coroutine-scopes/android-coroutine-scopes/_latestVersion)
 
+# Requirements
+
+You must use `androidx.lifecycle` and `androidx.appcompat` in order for these extensions to be able to listen to lifecycle events of activities and fragments.
+
 # Usage
 
 ```kotlin
