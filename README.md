@@ -3,6 +3,14 @@ that is tied to the lifecycle of common Android classes (`AppCompatActivity`, `A
 This allows you to auto-cancel any running coroutines that still have references to the Android framework object,
 thus avoiding a memory leak of that reference.
 
+Install via JCenter:
+
+```groovy
+implementation 'be.rottenrei:android-coroutine-scopes:LATESTVERSION'
+```
+
+[ ![JCenter](https://api.bintray.com/packages/karottenreibe/android-coroutine-scopes/android-coroutine-scopes/images/download.svg) ](https://bintray.com/karottenreibe/android-coroutine-scopes/android-coroutine-scopes/_latestVersion)
+
 # Usage
 
 ```kotlin
