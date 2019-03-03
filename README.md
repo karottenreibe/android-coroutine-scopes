@@ -1,4 +1,4 @@
-This project provides convenience extension methods to easily create a `CoroutineScope`
+Provides convenience extension methods to easily create a `CoroutineScope`
 that is tied to the lifecycle of common Android classes (`AppCompatActivity`, `AppCompatFragment`, `Dialog`, `View`).
 This allows you to auto-cancel any running coroutines that still have references to the Android framework object,
 thus avoiding a memory leak of that reference.
