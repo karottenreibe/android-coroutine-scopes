@@ -12,7 +12,7 @@ import kotlin.properties.ReadOnlyProperty
 import kotlin.reflect.KProperty
 
 private open class CancelableCoroutineContextProperty<T>(private val context: CoroutineContext) :
-    ReadOnlyProperty<T, CoroutineContext> {
+    ReadOnlyProperty<Any, CoroutineContext> {
 
     private var job = SupervisorJob()
 
@@ -23,7 +23,7 @@ private open class CancelableCoroutineContextProperty<T>(private val context: Co
         }
     }
 
-    override fun getValue(thisRef: T, property: KProperty<*>): CoroutineContext {
+    override fun getValue(thisRef: Any, property: KProperty<*>): CoroutineContext {
         return job + context
     }
 
@@ -37,7 +37,7 @@ private open class CancelableCoroutineContextProperty<T>(private val context: Co
  *
  *     override val coroutineContext by cancelOnDestroy(Dispatchers.Main)
  **/
-fun LifecycleOwner.cancelOnDestroy(context: CoroutineContext = EmptyCoroutineContext): ReadOnlyProperty<LifecycleOwner, CoroutineContext> =
+fun LifecycleOwner.cancelOnDestroy(context: CoroutineContext = EmptyCoroutineContext): ReadOnlyProperty<Any, CoroutineContext> =
     CancelableCoroutineContextProperty<LifecycleOwner>(context).also { property ->
         lifecycle.addObserver(object : DefaultLifecycleObserver {
             override fun onDestroy(owner: LifecycleOwner) {
@@ -54,7 +54,7 @@ fun LifecycleOwner.cancelOnDestroy(context: CoroutineContext = EmptyCoroutineCon
  *
  *     override val coroutineContext by cancelOnStop(Dispatchers.Main)
  **/
-fun LifecycleOwner.cancelOnStop(context: CoroutineContext = EmptyCoroutineContext): ReadOnlyProperty<LifecycleOwner, CoroutineContext> =
+fun LifecycleOwner.cancelOnStop(context: CoroutineContext = EmptyCoroutineContext): ReadOnlyProperty<Any, CoroutineContext> =
     CancelableCoroutineContextProperty<LifecycleOwner>(context).also { property ->
         lifecycle.addObserver(object : DefaultLifecycleObserver {
             override fun onStop(owner: LifecycleOwner) {
@@ -71,7 +71,7 @@ fun LifecycleOwner.cancelOnStop(context: CoroutineContext = EmptyCoroutineContex
  *
  *     override val coroutineContext by cancelOnPause(Dispatchers.Main)
  **/
-fun LifecycleOwner.cancelOnPause(context: CoroutineContext = EmptyCoroutineContext): ReadOnlyProperty<LifecycleOwner, CoroutineContext> =
+fun LifecycleOwner.cancelOnPause(context: CoroutineContext = EmptyCoroutineContext): ReadOnlyProperty<Any, CoroutineContext> =
     CancelableCoroutineContextProperty<LifecycleOwner>(context).also { property ->
         lifecycle.addObserver(object : DefaultLifecycleObserver {
             override fun onPause(owner: LifecycleOwner) {
@@ -88,7 +88,7 @@ fun LifecycleOwner.cancelOnPause(context: CoroutineContext = EmptyCoroutineConte
  *
  *     override val coroutineContext by cancelOnDismiss(Dispatchers.Main)
  **/
-fun Dialog.cancelOnDismiss(context: CoroutineContext = EmptyCoroutineContext): ReadOnlyProperty<Dialog, CoroutineContext> =
+fun Dialog.cancelOnDismiss(context: CoroutineContext = EmptyCoroutineContext): ReadOnlyProperty<Any, CoroutineContext> =
     CancelableCoroutineContextProperty<Dialog>(context).also { property ->
         setOnDismissListener {
             property.cancelJobs()
@@ -98,7 +98,7 @@ fun Dialog.cancelOnDismiss(context: CoroutineContext = EmptyCoroutineContext): R
 private class ViewCoroutineContextProperty(private val view: View, context: CoroutineContext) :
     CancelableCoroutineContextProperty<View>(context) {
 
-    override fun getValue(thisRef: View, property: KProperty<*>): CoroutineContext {
+    override fun getValue(thisRef: Any, property: KProperty<*>): CoroutineContext {
         if (view.isInEditMode) {
             // Coroutines don't work in edit mode. E.g. Dispatchers.Main isn't set. So return an empty
             // context instead
@@ -117,7 +117,7 @@ private class ViewCoroutineContextProperty(private val view: View, context: Coro
  *
  *     override val coroutineContext by cancelOnDetach(Dispatchers.Main)
  **/
-fun View.cancelOnDetach(context: CoroutineContext = EmptyCoroutineContext): ReadOnlyProperty<View, CoroutineContext> =
+fun View.cancelOnDetach(context: CoroutineContext = EmptyCoroutineContext): ReadOnlyProperty<Any, CoroutineContext> =
     ViewCoroutineContextProperty(this, context).also { property ->
         addOnAttachStateChangeListener(object : View.OnAttachStateChangeListener {
             override fun onViewDetachedFromWindow(view: View?) {
