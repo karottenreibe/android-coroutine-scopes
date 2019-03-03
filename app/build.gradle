@@ -1,6 +1,30 @@
 apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
 
+ext {
+    bintrayRepo = 'android-coroutine-scopes'
+    bintrayName = 'android-coroutine-scopes'
+
+    publishedGroupId = 'be.rottenrei'
+    libraryName = 'android-coroutine-scopes'
+    artifact = 'android-coroutine-scopes'
+
+    libraryDescription = 'Provides convenience extension methods to easily create a CoroutineScope that is tied to the lifecycle of common Android classes'
+
+    siteUrl = 'https://github.com/karottenreibe/android-coroutine-scopes'
+    gitUrl = 'https://github.com/karottenreibe/android-coroutine-scopes.git'
+
+    libraryVersion = '1.0.0'
+
+    developerId = 'karottenreibe'
+    developerName = 'Fabian Streitel'
+    developerEmail = 'maven@rottenrei.be'
+
+    licenseName = 'The Apache Software License, Version 2.0'
+    licenseUrl = 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+    allLicenses = ["Apache-2.0"]
+}
+
 android {
     compileSdkVersion 28
     defaultConfig {
@@ -26,3 +50,6 @@ dependencies {
     implementation 'androidx.core:core-ktx:1.1.0-alpha04'
     implementation group: 'org.jetbrains.kotlinx', name: 'kotlinx-coroutines-core', version: '1.1.1'
 }
+
+apply from: 'install.gradle'
+apply from: 'bintray.gradle'
